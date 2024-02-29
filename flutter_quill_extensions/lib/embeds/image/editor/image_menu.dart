@@ -2,9 +2,8 @@ import 'package:flutter/cupertino.dart' show showCupertinoModalPopup;
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart'
-    show ImageUrl, QuillController, StyleAttribute, getEmbedNode;
+    show QuillController, StyleAttribute, getEmbedNode;
 import 'package:flutter_quill/translations.dart';
-import 'package:super_clipboard/super_clipboard.dart';
 
 import '../../../models/config/image/editor/image_configurations.dart';
 import '../../../models/config/shared_configurations.dart';
@@ -82,28 +81,29 @@ class ImageOptionsMenu extends StatelessWidget {
                 );
               },
             ),
-          ListTile(
-            leading: const Icon(Icons.copy_all_outlined),
-            title: Text(context.loc.copy),
-            onTap: () async {
-              final navigator = Navigator.of(context);
-              final imageNode =
-                  getEmbedNode(controller, controller.selection.start).value;
-              final image = imageNode.value.data;
-              controller.copiedImageUrl = ImageUrl(
-                image,
-                getImageStyleString(controller),
-              );
+          // ListTile(
+          //   leading: const Icon(Icons.copy_all_outlined),
+          //   title: Text(context.loc.copy),
+          //   onTap: () async {
+          //     final navigator = Navigator.of(context);
+          //     final imageNode =
+          //         getEmbedNode(controller, controller.selection.start).value;
+          //     final image = imageNode.value.data;
+          //     controller.copiedImageUrl = ImageUrl(
+          //       image,
+          //       getImageStyleString(controller),
+          //     );
 
-              final data = await convertImageToUint8List(image);
-              final clipboard = SystemClipboard.instance;
-              if (data != null) {
-                final item = DataWriterItem()..add(Formats.png(data));
-                await clipboard?.write([item]);
-              }
-              navigator.pop();
-            },
-          ),
+          //     final data = await convertImageToUint8List(image);
+          //     final clipboard = SystemClipboard.instance;
+          //     if (data != null) {
+          //       final item = DataWriterItem()..add(Formats.png(data));
+          //       await clipboard?.write([item]);
+          //     }
+          //     navigator.pop();
+          //   },
+          // ),
+
           if (!isReadOnly)
             ListTile(
               leading: Icon(
